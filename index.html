@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#2c221e" />
+    <meta name="theme-color" content="#1e1512" />
     <title>Góc Tiệm Anh & Em · 20/10</title>
     <style>
       :root {
@@ -22,16 +22,19 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        -webkit-tap-highlight-color: transparent;
       }
 
       html,
       body {
         width: 100%;
         height: 100%;
+        height: 100dvh;
         overflow: hidden;
         background: var(--coffee-bg);
         color: var(--cream);
         font-family: var(--font);
+        position: fixed;
       }
 
       button {
@@ -39,7 +42,6 @@
         color: inherit;
       }
 
-      /* Warm Background Layers with Cozy Book Coffee Shop Aesthetic */
       .bg-container {
         position: fixed;
         inset: 0;
@@ -60,7 +62,6 @@
         opacity: 1;
       }
 
-      /* Sweet gradient background for final scene override */
       body.final-scene-active .bgl {
         opacity: 0 !important;
       }
@@ -100,7 +101,7 @@
         z-index: 2;
         padding: env(safe-area-inset-top) env(safe-area-inset-right)
           env(safe-area-inset-bottom) env(safe-area-inset-left);
-        overflow: visible;
+        overflow: hidden;
       }
 
       .scene {
@@ -128,7 +129,6 @@
         transform: translateY(0);
       }
 
-      /* Cat Character Positioning & States */
       body.m-hero #nu {
         left: 50%;
         top: 38%;
@@ -142,26 +142,26 @@
 
       @media (max-width: 768px) {
         .scene {
-          left: 5%;
-          right: 5%;
-          top: 6%;
-          bottom: 28%;
+          left: 4%;
+          right: 4%;
+          top: 4%;
+          bottom: 30%;
         }
         body.m-hero #nu {
           left: 50%;
-          top: 30%;
-          transform: translate(-50%, -50%) scale(0.85);
+          top: 24%;
+          transform: translate(-50%, -50%) scale(0.75);
         }
         body.m-side #nu {
           left: 50%;
-          top: 22%;
-          transform: translate(-50%, -50%) scale(0.72);
+          top: 17%;
+          transform: translate(-50%, -50%) scale(0.62);
         }
       }
 
       #nu {
         position: absolute;
-        width: min(45vw, 32vh);
+        width: min(42vw, 28vh);
         aspect-ratio: 240/300;
         z-index: 5;
         pointer-events: none;
@@ -170,7 +170,6 @@
           top 1.1s cubic-bezier(0.6, 0.05, 0.2, 1);
       }
 
-      /* Distinct Cat Animations on Navigation */
       #nu.spinning-left {
         animation: catSpinLeft 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
@@ -247,7 +246,6 @@
         }
       }
 
-      /* Rose holding animation */
       .rose-item {
         transform-origin: 170px 180px;
         animation: roseWobble 3s ease-in-out infinite;
@@ -262,7 +260,6 @@
         }
       }
 
-      /* Default mouth/smile states */
       .normal-mouth {
         display: block;
       }
@@ -270,7 +267,6 @@
         display: none;
       }
 
-      /* Final Scene Cat Big Smile & Sparkle Animations */
       body.final-scene-active .normal-mouth {
         display: none;
       }
@@ -290,7 +286,6 @@
         }
       }
 
-      /* Falling Roses Rain Effect */
       #rose-rain {
         position: fixed;
         inset: 0;
@@ -306,7 +301,7 @@
       .falling-rose {
         position: absolute;
         top: -10%;
-        font-size: 24px;
+        font-size: 22px;
         user-select: none;
         animation: fallLinear linear infinite;
       }
@@ -316,29 +311,35 @@
           opacity: 1;
         }
         100% {
-          transform: translateY(110vh) rotate(360deg) translateX(50px);
+          transform: translateY(110vh) rotate(360deg) translateX(40px);
           opacity: 0.2;
         }
       }
 
-      /* Improved 3D Carousel Perspective & Dynamic Depth */
       .gallery-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 32px;
+        gap: 14px;
         width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
         overflow: visible;
+        touch-action: pan-y;
       }
 
       .gallery-container {
-        perspective: 1800px;
-        -webkit-perspective: 1800px;
-        width: min(75vw, 340px);
-        height: min(48vw, 220px);
+        perspective: 1400px;
+        -webkit-perspective: 1400px;
+        width: min(72vw, 270px);
+        height: min(46vw, 170px);
         margin: 0 auto;
         position: relative;
         overflow: visible;
+        cursor: grab;
+      }
+      .gallery-container:active {
+        cursor: grabbing;
       }
 
       .spin-carousel {
@@ -347,7 +348,7 @@
         position: relative;
         transform-style: preserve-3d;
         -webkit-transform-style: preserve-3d;
-        transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         overflow: visible;
       }
 
@@ -355,12 +356,12 @@
         position: absolute;
         inset: 0;
         background: #18100d;
-        border: 2.5px solid var(--coffee-gold);
-        border-radius: 16px;
+        border: 2px solid var(--coffee-gold);
+        border-radius: 14px;
         overflow: hidden;
         box-shadow:
-          0 15px 35px rgba(0, 0, 0, 0.8),
-          0 0 15px rgba(221, 161, 94, 0.2);
+          0 10px 25px rgba(0, 0, 0, 0.8),
+          0 0 10px rgba(221, 161, 94, 0.2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -375,50 +376,36 @@
         object-fit: contain;
         background: #18100d;
         display: block;
+        pointer-events: none;
       }
 
-      @media (max-width: 480px) {
-        .gallery-container {
-          perspective: 1400px;
-          -webkit-perspective: 1400px;
-          width: 270px;
-          height: 180px;
-        }
-        .gallery-wrapper {
-          gap: 20px;
-        }
-      }
-
-      /* Gallery Controls cleanly positioned below without overlapping carousel */
       .gallery-nav {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         pointer-events: auto;
         flex-wrap: wrap;
         justify-content: center;
         width: 100%;
-        max-width: 380px;
         z-index: 10;
         position: relative;
-        margin-top: 10px;
+        margin-top: 2px;
       }
       .gallery-nav button {
-        padding: 10px 18px;
-        border-radius: 24px;
+        padding: 8px 14px;
+        border-radius: 20px;
         border: 1.5px solid var(--coffee-gold);
         background: rgba(44, 34, 30, 0.92);
         color: var(--cream);
         cursor: pointer;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 600;
         transition: all 0.25s ease;
         backdrop-filter: blur(8px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
       .gallery-nav button:hover {
         background: var(--coffee-gold);
         color: #1e1512;
-        transform: translateY(-2px);
       }
       .gallery-nav button.primary-btn {
         background: linear-gradient(135deg, #dda15e, #c6823e);
@@ -426,64 +413,53 @@
         font-weight: 700;
         border-color: #dda15e;
         width: 100%;
-        margin-top: 4px;
-        padding: 12px;
-        font-size: 15px;
-      }
-      .gallery-nav button.primary-btn:hover {
-        background: #e6b07a;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(221, 161, 94, 0.4);
+        margin-top: 2px;
+        padding: 10px;
+        font-size: 14px;
       }
 
-      /* Content Cards */
       .card-box {
-        background: rgba(38, 28, 24, 0.88);
+        background: rgba(38, 28, 24, 0.9);
         border: 1.5px solid var(--coffee-gold);
-        padding: 1.8em;
-        border-radius: 18px;
-        max-width: 440px;
-        width: 100%;
+        padding: 1.4em 1.2em;
+        border-radius: 16px;
+        max-width: 380px;
+        width: 90%;
         box-shadow:
-          0 12px 35px rgba(0, 0, 0, 0.5),
+          0 10px 30px rgba(0, 0, 0, 0.5),
           inset 0 1px 0 rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(12px);
       }
       .card-item {
-        font-size: 17px;
-        line-height: 1.6;
+        font-size: clamp(15px, 4vw, 17px);
+        line-height: 1.5;
         color: var(--cream);
       }
 
       .qbtns {
         display: flex;
-        gap: 14px;
+        gap: 10px;
         justify-content: center;
-        margin-top: 18px;
+        margin-top: 14px;
         pointer-events: auto;
       }
       .qbtns button {
-        padding: 0.7em 1.4em;
-        border-radius: 22px;
+        padding: 0.6em 1.1em;
+        border-radius: 20px;
         border: 1.5px solid var(--coffee-gold);
         background: var(--coffee-gold);
         color: #1e1512;
         font-weight: 700;
         cursor: pointer;
-        transition: all 0.25s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      }
-      .qbtns button:hover {
-        transform: translateY(-2px);
-        background: #f0c395;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
 
-      /* Speech Bubble */
       #bubble {
         position: absolute;
-        left: 6%;
-        right: 6%;
-        bottom: 6%;
+        left: 4%;
+        right: 4%;
+        bottom: 12px;
         display: flex;
         justify-content: center;
         z-index: 6;
@@ -494,17 +470,17 @@
         opacity: 0;
       }
       #line {
-        max-width: 42em;
+        max-width: 100%;
         text-align: center;
-        font-size: clamp(16px, 3.8vw, 22px);
-        line-height: 1.5;
-        padding: 0.8em 1.4em;
-        border-radius: 1.2em;
-        background: rgba(38, 28, 24, 0.92);
+        font-size: clamp(14px, 3.8vw, 19px);
+        line-height: 1.4;
+        padding: 0.6em 1em;
+        border-radius: 1em;
+        background: rgba(38, 28, 24, 0.95);
         border: 1.5px solid var(--coffee-gold);
         color: var(--cream);
         backdrop-filter: blur(10px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
       }
       #line em {
         font-style: normal;
@@ -514,41 +490,39 @@
       }
 
       .bigdate {
-        font-size: clamp(65px, 18vw, 120px);
+        font-size: clamp(55px, 16vw, 100px);
         color: var(--warm-accent);
         font-weight: bold;
         font-family: var(--script);
         text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
       }
       .date-intro {
-        font-size: 19px;
+        font-size: 17px;
         color: var(--cream);
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         font-weight: 500;
         opacity: 0.95;
-        letter-spacing: 0.05em;
       }
       .date-sub {
-        letter-spacing: 0.25em;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        font-size: 13px;
+        font-size: 12px;
         color: var(--coffee-gold);
       }
 
-      /* Controls: Mute & Skip */
       .top-controls {
         position: fixed;
-        right: 18px;
-        top: 18px;
+        right: 12px;
+        top: 12px;
         z-index: 40;
         display: flex;
-        gap: 10px;
+        gap: 8px;
         align-items: center;
       }
       .icon-btn {
-        height: 44px;
-        padding: 0 16px;
-        border-radius: 22px;
+        height: 38px;
+        padding: 0 12px;
+        border-radius: 19px;
         border: 1px solid var(--coffee-gold);
         background: rgba(38, 28, 24, 0.85);
         color: var(--cream);
@@ -556,27 +530,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 6px;
+        gap: 4px;
         backdrop-filter: blur(6px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        font-size: 13px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        font-size: 12px;
         font-weight: 600;
-        transition:
-          transform 0.2s ease,
-          background 0.2s ease;
-      }
-      .icon-btn:hover {
-        transform: scale(1.05);
-        background: rgba(58, 44, 38, 0.95);
       }
       #mute {
-        width: 44px;
+        width: 38px;
         padding: 0;
         border-radius: 50%;
       }
       #mute svg {
-        width: 22px;
-        height: 22px;
+        width: 18px;
+        height: 18px;
         fill: none;
         stroke: var(--cream);
         stroke-width: 2;
@@ -593,7 +560,6 @@
         display: block;
       }
 
-      /* Splash Start Overlay */
       #start {
         position: fixed;
         inset: 0;
@@ -602,11 +568,11 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1.2em;
+        gap: 1em;
         text-align: center;
-        padding: 24px;
+        padding: 20px;
         cursor: pointer;
-        background: rgba(20, 14, 11, 0.88);
+        background: rgba(20, 14, 11, 0.92);
         backdrop-filter: blur(16px);
         transition:
           opacity 1s ease,
@@ -618,61 +584,59 @@
         pointer-events: none;
       }
       #start h2 {
-        font-size: clamp(32px, 8vw, 52px);
+        font-size: clamp(26px, 7vw, 44px);
         color: var(--cream);
         font-family: var(--script);
         text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       }
       #start p {
-        font-size: 16px;
+        font-size: 15px;
         color: var(--coffee-gold);
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
       }
       #start small {
         position: absolute;
-        bottom: 25px;
-        font-size: 13px;
+        bottom: 20px;
+        font-size: 12px;
         color: rgba(255, 249, 235, 0.6);
       }
 
       .final {
         text-align: center;
-        padding: 2em;
-        border-radius: 1.5em;
+        padding: 1.5em;
+        border-radius: 1.2em;
         background: rgba(50, 25, 35, 0.92);
         border: 1.5px solid #ffb5c5;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(12px);
+        max-width: 90%;
       }
       .final h1 {
-        font-size: 38px;
+        font-size: clamp(28px, 7vw, 36px);
         color: #ffd1dc;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         font-family: var(--script);
       }
       .final p {
         color: #fff0f3;
+        font-size: 15px;
       }
       .f-act {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         justify-content: center;
-        margin-top: 18px;
+        margin-top: 14px;
       }
       .f-act button {
-        padding: 8px 18px;
-        border-radius: 22px;
+        padding: 7px 16px;
+        border-radius: 20px;
         border: 1.5px solid #ffb5c5;
         background: #ffb5c5;
         color: #3a1522;
         font-weight: bold;
         cursor: pointer;
-        transition: all 0.25s ease;
-      }
-      .f-act button:hover {
-        background: #ffc2d1;
-        transform: translateY(-2px);
+        font-size: 14px;
       }
 
       #prog {
@@ -692,7 +656,6 @@
     </style>
   </head>
   <body class="m-hero">
-    <!-- Rich Book Coffee Shop Background Imagery Layers -->
     <div class="bg-container" id="bgs">
       <div
         class="bgl on"
@@ -765,10 +728,8 @@
 
       <section class="scene" id="sc-gallery">
         <div class="gallery-wrapper">
-          <div class="gallery-container">
-            <div class="spin-carousel" id="spinGallery">
-              <!-- Dynamically populated via Tangent Math calculation in JS -->
-            </div>
+          <div class="gallery-container" id="gallerySwipeArea">
+            <div class="spin-carousel" id="spinGallery"></div>
           </div>
           <div class="gallery-nav">
             <button id="prevGallery">❮ Ảnh trước</button>
@@ -782,7 +743,7 @@
 
       <section class="scene" id="sc-health">
         <div class="card-box">
-          <div style="font-size: 36px; margin-bottom: 10px">🍵</div>
+          <div style="font-size: 32px; margin-bottom: 6px">🍵</div>
           <div class="card-item">
             Món quà đầu tiên: Thật nhiều <em>sức khỏe</em> để luôn tràn đầy năng
             lượng!
@@ -792,7 +753,7 @@
 
       <section class="scene" id="sc-love">
         <div class="card-box">
-          <div style="font-size: 36px; margin-bottom: 10px">💖</div>
+          <div style="font-size: 32px; margin-bottom: 6px">💖</div>
           <div class="card-item">
             Và món quà thứ hai: Luôn được <em>yêu thương</em> trọn vẹn và ngọt
             ngào nhất.
@@ -830,7 +791,6 @@
         <div class="nu-glow"></div>
         <svg class="nu-svg" viewBox="0 0 240 300">
           <g class="head">
-            <!-- Cat Ears -->
             <polygon
               points="70,95 40,25 100,65"
               fill="#dfb15b"
@@ -848,7 +808,6 @@
             />
             <polygon points="178,90 196,38 152,68" fill="#e6b07a" />
 
-            <!-- Head Base -->
             <circle
               cx="120"
               cy="125"
@@ -858,7 +817,6 @@
               stroke-width="3"
             />
 
-            <!-- Cute Glasses -->
             <circle
               cx="95"
               cy="120"
@@ -884,16 +842,13 @@
               stroke-width="3"
             />
 
-            <!-- Eyes -->
             <ellipse cx="95" cy="120" rx="4" ry="7" fill="#3a2e12" />
             <ellipse cx="145" cy="120" rx="4" ry="7" fill="#3a2e12" />
             <circle cx="93" cy="117" r="1.5" fill="#ffffff" />
             <circle cx="143" cy="117" r="1.5" fill="#ffffff" />
 
-            <!-- Nose & Mouth (Normal vs Big Smile) -->
             <polygon points="120,132 115,127 125,127" fill="#e76f51" />
 
-            <!-- Normal Mouth -->
             <path
               class="normal-mouth"
               d="M112 136 Q120 143 127 136"
@@ -903,7 +858,6 @@
               stroke-linecap="round"
             />
 
-            <!-- Big Happy Smile for Final Scene -->
             <path
               class="big-smile"
               d="M108 135 Q120 152 132 135 Z"
@@ -913,7 +867,6 @@
               stroke-linejoin="round"
             />
 
-            <!-- Whiskers -->
             <line
               x1="70"
               y1="128"
@@ -951,7 +904,6 @@
               stroke-linecap="round"
             />
 
-            <!-- Gentleman Bowtie & Body -->
             <path
               d="M85 170 C65 178 60 235 90 250 L150 250 C180 235 175 178 155 170 Z"
               fill="#d48806"
@@ -959,7 +911,6 @@
               stroke-width="3"
               stroke-linejoin="round"
             />
-            <!-- Shirt Collar & Bowtie -->
             <polygon
               points="120,172 100,165 140,165"
               fill="#fff9eb"
@@ -970,7 +921,6 @@
             <polygon points="120,172 135,168 135,178" fill="#a02a2a" />
             <circle cx="120" cy="172" r="3" fill="#660000" />
 
-            <!-- Cat Holding a Rose (Paws & Rose) -->
             <g class="rose-item">
               <circle
                 cx="105"
@@ -1162,13 +1112,12 @@
         const catNode = $("#nu");
         const bgm = $("#bgm");
 
-        // Generate Falling Roses Rain effect
         function initRoseRain() {
           const container = $("#rose-rain");
           if (!container) return;
           container.innerHTML = "";
           const emojis = ["🌹", "🌸", "❤️", "🌷", "✨"];
-          for (let i = 0; i < 22; i++) {
+          for (let i = 0; i < 18; i++) {
             const span = document.createElement("span");
             span.className = "falling-rose";
             span.textContent =
@@ -1176,7 +1125,7 @@
             span.style.left = Math.random() * 100 + "%";
             span.style.animationDuration = 3.5 + Math.random() * 4 + "s";
             span.style.animationDelay = Math.random() * 5 + "s";
-            span.style.fontSize = 16 + Math.random() * 18 + "px";
+            span.style.fontSize = 16 + Math.random() * 14 + "px";
             container.appendChild(span);
           }
         }
@@ -1186,8 +1135,8 @@
           carousel.innerHTML = "";
           const N = galleryItems.length;
           const container = $(".gallery-container");
-          const itemWidth = container ? container.offsetWidth : 300;
-          const depthOffset = 160;
+          const itemWidth = container ? container.offsetWidth : 260;
+          const depthOffset = 120;
           const r =
             Math.round(itemWidth / 2 / Math.tan(Math.PI / N)) + depthOffset;
 
@@ -1277,6 +1226,36 @@
           }
           if (carousel) carousel.style.transform = `rotateY(${currAngle}deg)`;
           say(galleryItems[galleryIndex].text);
+        }
+
+        const swipeArea = $("#gallerySwipeArea");
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        swipeArea?.addEventListener(
+          "touchstart",
+          (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+          },
+          { passive: true },
+        );
+
+        swipeArea?.addEventListener(
+          "touchend",
+          (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipeGesture();
+          },
+          { passive: true },
+        );
+
+        function handleSwipeGesture() {
+          const threshold = 40;
+          if (touchEndX < touchStartX - threshold) {
+            updateGallery("right");
+          } else if (touchEndX > touchStartX + threshold) {
+            updateGallery("left");
+          }
         }
 
         $("#prevGallery")?.addEventListener("click", () =>
