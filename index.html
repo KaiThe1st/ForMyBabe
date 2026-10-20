@@ -1,0 +1,1411 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#2c221e" />
+    <title>Góc Tiệm Anh & Em · 20/10</title>
+    <style>
+      :root {
+        --coffee-bg: #1e1512;
+        --coffee-gold: #dda15e;
+        --cream: #fff9eb;
+        --warm-accent: #e6b07a;
+        --font: "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
+        --script: "Pacifico", Georgia, cursive;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--coffee-bg);
+        color: var(--cream);
+        font-family: var(--font);
+      }
+
+      button {
+        font: inherit;
+        color: inherit;
+      }
+
+      /* Warm Background Layers with Cozy Book Coffee Shop Aesthetic */
+      .bg-container {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .bgl {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.45) blur(3px);
+        transform: scale(1.05);
+      }
+      .bgl.on {
+        opacity: 1;
+      }
+
+      /* Sweet gradient background for final scene override */
+      body.final-scene-active .bgl {
+        opacity: 0 !important;
+      }
+      body.final-scene-active .bg-container {
+        background: radial-gradient(
+          circle at center,
+          #6b2d40 0%,
+          #3a1522 60%,
+          #1a0b12 100%
+        ) !important;
+      }
+
+      .bg-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: radial-gradient(
+          circle at center,
+          rgba(67, 40, 24, 0.45) 0%,
+          rgba(21, 14, 12, 0.85) 100%
+        );
+        backdrop-filter: blur(1px);
+        transition: background 1.5s ease;
+      }
+      body.final-scene-active .bg-overlay {
+        background: radial-gradient(
+          circle at center,
+          rgba(130, 45, 70, 0.3) 0%,
+          rgba(40, 15, 25, 0.8) 100%
+        );
+      }
+
+      #stage {
+        position: fixed;
+        inset: 0;
+        z-index: 2;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
+        overflow: visible;
+      }
+
+      .scene {
+        position: absolute;
+        left: 35%;
+        right: 4%;
+        top: 6%;
+        bottom: 26%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+        text-align: center;
+        transform: translateY(10px);
+        overflow: visible;
+      }
+      .scene.on {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      /* Cat Character Positioning & States */
+      body.m-hero #nu {
+        left: 50%;
+        top: 38%;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      body.m-side #nu {
+        left: 18%;
+        top: 48%;
+        transform: translate(-50%, -50%) scale(0.92);
+      }
+
+      @media (max-width: 768px) {
+        .scene {
+          left: 5%;
+          right: 5%;
+          top: 6%;
+          bottom: 28%;
+        }
+        body.m-hero #nu {
+          left: 50%;
+          top: 30%;
+          transform: translate(-50%, -50%) scale(0.85);
+        }
+        body.m-side #nu {
+          left: 50%;
+          top: 22%;
+          transform: translate(-50%, -50%) scale(0.72);
+        }
+      }
+
+      #nu {
+        position: absolute;
+        width: min(45vw, 32vh);
+        aspect-ratio: 240/300;
+        z-index: 5;
+        pointer-events: none;
+        transition:
+          left 1.1s cubic-bezier(0.6, 0.05, 0.2, 1),
+          top 1.1s cubic-bezier(0.6, 0.05, 0.2, 1);
+      }
+
+      /* Distinct Cat Animations on Navigation */
+      #nu.spinning-left {
+        animation: catSpinLeft 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      #nu.spinning-right {
+        animation: catSpinRight 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      @keyframes catSpinLeft {
+        0% {
+          transform: translate(-50%, -50%) scale(0.92) rotate(0deg)
+            translateX(0);
+        }
+        40% {
+          transform: translate(-50%, -55%) scale(1.05) rotate(-18deg)
+            translateX(-35px);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(0.92) rotate(0deg)
+            translateX(0);
+        }
+      }
+
+      @keyframes catSpinRight {
+        0% {
+          transform: translate(-50%, -50%) scale(0.92) rotate(0deg)
+            translateX(0);
+        }
+        40% {
+          transform: translate(-50%, -55%) scale(1.05) rotate(18deg)
+            translateX(35px);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(0.92) rotate(0deg)
+            translateX(0);
+        }
+      }
+
+      .nu-glow {
+        position: absolute;
+        inset: -20%;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(230, 176, 122, 0.35) 0%,
+          transparent 70%
+        );
+      }
+      .nu-svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        animation: float 4.6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .head {
+        transform-origin: 120px 156px;
+        animation: sway 5.2s ease-in-out infinite;
+      }
+      @keyframes sway {
+        0%,
+        100% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+
+      /* Rose holding animation */
+      .rose-item {
+        transform-origin: 170px 180px;
+        animation: roseWobble 3s ease-in-out infinite;
+      }
+      @keyframes roseWobble {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(6deg) translateY(-2px);
+        }
+      }
+
+      /* Default mouth/smile states */
+      .normal-mouth {
+        display: block;
+      }
+      .big-smile {
+        display: none;
+      }
+
+      /* Final Scene Cat Big Smile & Sparkle Animations */
+      body.final-scene-active .normal-mouth {
+        display: none;
+      }
+      body.final-scene-active .big-smile {
+        display: block;
+      }
+      body.final-scene-active .head {
+        animation: happySway 1.8s ease-in-out infinite;
+      }
+      @keyframes happySway {
+        0%,
+        100% {
+          transform: rotate(-5deg) scale(1.02);
+        }
+        50% {
+          transform: rotate(5deg) scale(1.02);
+        }
+      }
+
+      /* Falling Roses Rain Effect */
+      #rose-rain {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 3;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+      body.final-scene-active #rose-rain {
+        opacity: 1;
+      }
+      .falling-rose {
+        position: absolute;
+        top: -10%;
+        font-size: 24px;
+        user-select: none;
+        animation: fallLinear linear infinite;
+      }
+      @keyframes fallLinear {
+        0% {
+          transform: translateY(0) rotate(0deg) translateX(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg) translateX(50px);
+          opacity: 0.2;
+        }
+      }
+
+      /* Improved 3D Carousel Perspective & Dynamic Depth */
+      .gallery-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        width: 100%;
+        overflow: visible;
+      }
+
+      .gallery-container {
+        perspective: 1800px;
+        -webkit-perspective: 1800px;
+        width: min(75vw, 340px);
+        height: min(48vw, 220px);
+        margin: 0 auto;
+        position: relative;
+        overflow: visible;
+      }
+
+      .spin-carousel {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+        transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        overflow: visible;
+      }
+
+      .gallery-item {
+        position: absolute;
+        inset: 0;
+        background: #18100d;
+        border: 2.5px solid var(--coffee-gold);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.8),
+          0 0 15px rgba(221, 161, 94, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        will-change: transform;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #18100d;
+        display: block;
+      }
+
+      @media (max-width: 480px) {
+        .gallery-container {
+          perspective: 1400px;
+          -webkit-perspective: 1400px;
+          width: 270px;
+          height: 180px;
+        }
+        .gallery-wrapper {
+          gap: 20px;
+        }
+      }
+
+      /* Gallery Controls cleanly positioned below without overlapping carousel */
+      .gallery-nav {
+        display: flex;
+        gap: 10px;
+        pointer-events: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 380px;
+        z-index: 10;
+        position: relative;
+        margin-top: 10px;
+      }
+      .gallery-nav button {
+        padding: 10px 18px;
+        border-radius: 24px;
+        border: 1.5px solid var(--coffee-gold);
+        background: rgba(44, 34, 30, 0.92);
+        color: var(--cream);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+      .gallery-nav button:hover {
+        background: var(--coffee-gold);
+        color: #1e1512;
+        transform: translateY(-2px);
+      }
+      .gallery-nav button.primary-btn {
+        background: linear-gradient(135deg, #dda15e, #c6823e);
+        color: #1e1512;
+        font-weight: 700;
+        border-color: #dda15e;
+        width: 100%;
+        margin-top: 4px;
+        padding: 12px;
+        font-size: 15px;
+      }
+      .gallery-nav button.primary-btn:hover {
+        background: #e6b07a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(221, 161, 94, 0.4);
+      }
+
+      /* Content Cards */
+      .card-box {
+        background: rgba(38, 28, 24, 0.88);
+        border: 1.5px solid var(--coffee-gold);
+        padding: 1.8em;
+        border-radius: 18px;
+        max-width: 440px;
+        width: 100%;
+        box-shadow:
+          0 12px 35px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+      }
+      .card-item {
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--cream);
+      }
+
+      .qbtns {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        margin-top: 18px;
+        pointer-events: auto;
+      }
+      .qbtns button {
+        padding: 0.7em 1.4em;
+        border-radius: 22px;
+        border: 1.5px solid var(--coffee-gold);
+        background: var(--coffee-gold);
+        color: #1e1512;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+      .qbtns button:hover {
+        transform: translateY(-2px);
+        background: #f0c395;
+      }
+
+      /* Speech Bubble */
+      #bubble {
+        position: absolute;
+        left: 6%;
+        right: 6%;
+        bottom: 6%;
+        display: flex;
+        justify-content: center;
+        z-index: 6;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      #bubble.empty {
+        opacity: 0;
+      }
+      #line {
+        max-width: 42em;
+        text-align: center;
+        font-size: clamp(16px, 3.8vw, 22px);
+        line-height: 1.5;
+        padding: 0.8em 1.4em;
+        border-radius: 1.2em;
+        background: rgba(38, 28, 24, 0.92);
+        border: 1.5px solid var(--coffee-gold);
+        color: var(--cream);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      }
+      #line em {
+        font-style: normal;
+        color: var(--warm-accent);
+        font-weight: bold;
+        font-family: var(--script);
+      }
+
+      .bigdate {
+        font-size: clamp(65px, 18vw, 120px);
+        color: var(--warm-accent);
+        font-weight: bold;
+        font-family: var(--script);
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      }
+      .date-intro {
+        font-size: 19px;
+        color: var(--cream);
+        margin-bottom: 4px;
+        font-weight: 500;
+        opacity: 0.95;
+        letter-spacing: 0.05em;
+      }
+      .date-sub {
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: var(--coffee-gold);
+      }
+
+      /* Controls: Mute & Skip */
+      .top-controls {
+        position: fixed;
+        right: 18px;
+        top: 18px;
+        z-index: 40;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .icon-btn {
+        height: 44px;
+        padding: 0 16px;
+        border-radius: 22px;
+        border: 1px solid var(--coffee-gold);
+        background: rgba(38, 28, 24, 0.85);
+        color: var(--cream);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        font-size: 13px;
+        font-weight: 600;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+      .icon-btn:hover {
+        transform: scale(1.05);
+        background: rgba(58, 44, 38, 0.95);
+      }
+      #mute {
+        width: 44px;
+        padding: 0;
+        border-radius: 50%;
+      }
+      #mute svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: var(--cream);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      #mute .off {
+        display: none;
+      }
+      #mute.muted .on {
+        display: none;
+      }
+      #mute.muted .off {
+        display: block;
+      }
+
+      /* Splash Start Overlay */
+      #start {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.2em;
+        text-align: center;
+        padding: 24px;
+        cursor: pointer;
+        background: rgba(20, 14, 11, 0.88);
+        backdrop-filter: blur(16px);
+        transition:
+          opacity 1s ease,
+          visibility 1s;
+      }
+      #start.gone {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      #start h2 {
+        font-size: clamp(32px, 8vw, 52px);
+        color: var(--cream);
+        font-family: var(--script);
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
+      #start p {
+        font-size: 16px;
+        color: var(--coffee-gold);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      #start small {
+        position: absolute;
+        bottom: 25px;
+        font-size: 13px;
+        color: rgba(255, 249, 235, 0.6);
+      }
+
+      .final {
+        text-align: center;
+        padding: 2em;
+        border-radius: 1.5em;
+        background: rgba(50, 25, 35, 0.92);
+        border: 1.5px solid #ffb5c5;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+      }
+      .final h1 {
+        font-size: 38px;
+        color: #ffd1dc;
+        margin-bottom: 12px;
+        font-family: var(--script);
+      }
+      .final p {
+        color: #fff0f3;
+      }
+      .f-act {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 18px;
+      }
+      .f-act button {
+        padding: 8px 18px;
+        border-radius: 22px;
+        border: 1.5px solid #ffb5c5;
+        background: #ffb5c5;
+        color: #3a1522;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+      .f-act button:hover {
+        background: #ffc2d1;
+        transform: translateY(-2px);
+      }
+
+      #prog {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 3px;
+        width: 0;
+        background: linear-gradient(
+          90deg,
+          var(--coffee-gold),
+          var(--warm-accent)
+        );
+        z-index: 30;
+        transition: width 0.8s ease;
+      }
+    </style>
+  </head>
+  <body class="m-hero">
+    <!-- Rich Book Coffee Shop Background Imagery Layers -->
+    <div class="bg-container" id="bgs">
+      <div
+        class="bgl on"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop&quot;);
+        "
+      ></div>
+      <div
+        class="bgl"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1600&auto=format&fit=crop&quot;);
+        "
+      ></div>
+      <div
+        class="bgl"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1600&auto=format&fit=crop&quot;);
+        "
+      ></div>
+      <div
+        class="bgl"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1600&auto=format&fit=crop&quot;);
+        "
+      ></div>
+      <div
+        class="bgl"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1600&auto=format&fit=crop&quot;);
+        "
+      ></div>
+    </div>
+    <div class="bg-overlay"></div>
+    <div id="rose-rain"></div>
+    <div id="prog"></div>
+
+    <div class="top-controls">
+      <button id="btnSkip" class="icon-btn" aria-label="Bỏ qua">
+        Bỏ qua ➔
+      </button>
+      <button id="mute" class="icon-btn" aria-label="Bật/tắt nhạc">
+        <svg viewBox="0 0 24 24">
+          <g class="on">
+            <path d="M4 9v6h4l5 4V5L8 9H4z" />
+            <path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12" />
+          </g>
+          <g class="off">
+            <path d="M4 9v6h4l5 4V5L8 9H4z" />
+            <path d="M17 9l5 6M22 9l-5 6" />
+          </g>
+        </svg>
+      </button>
+    </div>
+
+    <div id="stage">
+      <section class="scene" id="sc-intro">
+        <div class="date-intro">✨ Chào mừng ngày đặc biệt ✨</div>
+        <div class="bigdate"><span>20</span>/<span>10</span></div>
+        <div class="date-sub">tôn vinh một nửa thế giới tuyệt vời</div>
+      </section>
+
+      <section class="scene" id="sc-girlfriend">
+        <div class="card-box">
+          <div class="card-item">
+            Dành tặng cô gái đáng yêu, xinh đẹp và tuyệt vời nhất của anh. Cảm
+            ơn em vì đã luôn ở bên cạnh anh qua mọi thăng trầm và khó khăn! ❤️
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="sc-gallery">
+        <div class="gallery-wrapper">
+          <div class="gallery-container">
+            <div class="spin-carousel" id="spinGallery">
+              <!-- Dynamically populated via Tangent Math calculation in JS -->
+            </div>
+          </div>
+          <div class="gallery-nav">
+            <button id="prevGallery">❮ Ảnh trước</button>
+            <button id="nextGallery">Ảnh sau ❯</button>
+            <button id="continueStory" class="primary-btn">
+              Tiếp tục câu chuyện ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="sc-health">
+        <div class="card-box">
+          <div style="font-size: 36px; margin-bottom: 10px">🍵</div>
+          <div class="card-item">
+            Món quà đầu tiên: Thật nhiều <em>sức khỏe</em> để luôn tràn đầy năng
+            lượng!
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="sc-love">
+        <div class="card-box">
+          <div style="font-size: 36px; margin-bottom: 10px">💖</div>
+          <div class="card-item">
+            Và món quà thứ hai: Luôn được <em>yêu thương</em> trọn vẹn và ngọt
+            ngào nhất.
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="sc-question">
+        <div class="card-box">
+          <div class="card-item">
+            Trước khi nhận quà chót, cho anh hỏi nhỏ... em có feedback về
+            website này hong?
+          </div>
+          <div class="qbtns">
+            <button id="ansYes">Rồi, rất ngọt ngào!</button>
+            <button id="ansNo">Chưa nè...</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="sc-final">
+        <div class="final">
+          <h1>Phụ nữ Việt Nam 20 · 10</h1>
+          <p>
+            Chúc cậu luôn rạng rỡ, xinh đẹp và hạnh phúc bên góc tiệm bình yên
+            này!
+          </p>
+          <div class="f-act">
+            <button id="b-replay">Xem lại từ đầu</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="nu" aria-hidden="true">
+        <div class="nu-glow"></div>
+        <svg class="nu-svg" viewBox="0 0 240 300">
+          <g class="head">
+            <!-- Cat Ears -->
+            <polygon
+              points="70,95 40,25 100,65"
+              fill="#dfb15b"
+              stroke="#3a2e12"
+              stroke-width="3"
+              stroke-linejoin="round"
+            />
+            <polygon points="62,90 44,38 88,68" fill="#e6b07a" />
+            <polygon
+              points="170,95 200,25 140,65"
+              fill="#dfb15b"
+              stroke="#3a2e12"
+              stroke-width="3"
+              stroke-linejoin="round"
+            />
+            <polygon points="178,90 196,38 152,68" fill="#e6b07a" />
+
+            <!-- Head Base -->
+            <circle
+              cx="120"
+              cy="125"
+              r="58"
+              fill="#f4d06f"
+              stroke="#3a2e12"
+              stroke-width="3"
+            />
+
+            <!-- Cute Glasses -->
+            <circle
+              cx="95"
+              cy="120"
+              r="15"
+              fill="rgba(255,255,255,0.25)"
+              stroke="#3a2e12"
+              stroke-width="3"
+            />
+            <circle
+              cx="145"
+              cy="120"
+              r="15"
+              fill="rgba(255,255,255,0.25)"
+              stroke="#3a2e12"
+              stroke-width="3"
+            />
+            <line
+              x1="110"
+              y1="120"
+              x2="130"
+              y2="120"
+              stroke="#3a2e12"
+              stroke-width="3"
+            />
+
+            <!-- Eyes -->
+            <ellipse cx="95" cy="120" rx="4" ry="7" fill="#3a2e12" />
+            <ellipse cx="145" cy="120" rx="4" ry="7" fill="#3a2e12" />
+            <circle cx="93" cy="117" r="1.5" fill="#ffffff" />
+            <circle cx="143" cy="117" r="1.5" fill="#ffffff" />
+
+            <!-- Nose & Mouth (Normal vs Big Smile) -->
+            <polygon points="120,132 115,127 125,127" fill="#e76f51" />
+
+            <!-- Normal Mouth -->
+            <path
+              class="normal-mouth"
+              d="M112 136 Q120 143 127 136"
+              stroke="#3a2e12"
+              stroke-width="2.5"
+              fill="none"
+              stroke-linecap="round"
+            />
+
+            <!-- Big Happy Smile for Final Scene -->
+            <path
+              class="big-smile"
+              d="M108 135 Q120 152 132 135 Z"
+              fill="#d90429"
+              stroke="#3a2e12"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+            />
+
+            <!-- Whiskers -->
+            <line
+              x1="70"
+              y1="128"
+              x2="45"
+              y2="124"
+              stroke="#3a2e12"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="70"
+              y1="134"
+              x2="48"
+              y2="136"
+              stroke="#3a2e12"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="170"
+              y1="128"
+              x2="195"
+              y2="124"
+              stroke="#3a2e12"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="170"
+              y1="134"
+              x2="192"
+              y2="136"
+              stroke="#3a2e12"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- Gentleman Bowtie & Body -->
+            <path
+              d="M85 170 C65 178 60 235 90 250 L150 250 C180 235 175 178 155 170 Z"
+              fill="#d48806"
+              stroke="#3a2e12"
+              stroke-width="3"
+              stroke-linejoin="round"
+            />
+            <!-- Shirt Collar & Bowtie -->
+            <polygon
+              points="120,172 100,165 140,165"
+              fill="#fff9eb"
+              stroke="#3a2e12"
+              stroke-width="2"
+            />
+            <polygon points="120,172 105,168 105,178" fill="#a02a2a" />
+            <polygon points="120,172 135,168 135,178" fill="#a02a2a" />
+            <circle cx="120" cy="172" r="3" fill="#660000" />
+
+            <!-- Cat Holding a Rose (Paws & Rose) -->
+            <g class="rose-item">
+              <circle
+                cx="105"
+                cy="205"
+                r="10"
+                fill="#f4d06f"
+                stroke="#3a2e12"
+                stroke-width="2.5"
+              />
+              <circle
+                cx="135"
+                cy="205"
+                r="10"
+                fill="#f4d06f"
+                stroke="#3a2e12"
+                stroke-width="2.5"
+              />
+              <path
+                d="M135 205 Q165 180 160 145"
+                stroke="#2d6a4f"
+                stroke-width="3.5"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <path
+                d="M152 175 Q165 170 168 162 Q158 170 152 175 Z"
+                fill="#40916c"
+                stroke="#2d6a4f"
+                stroke-width="1.5"
+              />
+              <circle
+                cx="160"
+                cy="142"
+                r="12"
+                fill="#d90429"
+                stroke="#8d0801"
+                stroke-width="2"
+              />
+              <circle cx="156" cy="138" r="7" fill="#ef233c" />
+              <circle cx="164" cy="144" r="6" fill="#b7094c" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <div id="bubble" class="empty"><div id="line"></div></div>
+    </div>
+
+    <div id="start">
+      <h2>Góc tiệm của anh và em<br />cho ngày 20/10</h2>
+      <p>Chạm để mở quà</p>
+      <small>Bật âm thanh để nghe trọn vẹn nhé</small>
+    </div>
+
+    <audio
+      id="bgm"
+      loop
+      preload="auto"
+      playsinline
+      src="media/music.mp3"
+    ></audio>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        "use strict";
+        const $ = (s, r = document) => r.querySelector(s),
+          $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+        const galleryItems = [
+          {
+            src: "media/image 1.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=800&auto=format&fit=crop",
+            text: "Ôi bức ảnh này trông em đáng yêu và rạng rỡ làm sao! 🌸",
+          },
+          {
+            src: "media/image 2.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=800&auto=format&fit=crop",
+            text: "Khoảnh khắc này xinh xắn hết nấc luôn, nhìn là muốn tan chảy rồi~ 🥰",
+          },
+          {
+            src: "media/image 3.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=800&auto=format&fit=crop",
+            text: "Nụ cười tỏa nắng thế này thì anh chịu sao nổi chứ! ✨",
+          },
+          {
+            src: "media/image 4.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800&auto=format&fit=crop",
+            text: "Góc tiệm bình yên ngập tràn kỉ niệm đẹp của chúng mình! ☕",
+          },
+          {
+            src: "media/image 5.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+            text: "Chú vịt vàng này trông em thật đáng yêu và tinh nghịch! 🐥",
+          },
+          {
+            src: "media/image 6.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+            text: "Công chúa của anh trong khung cảnh lãng mạn này thật tuyệt vời! 👑",
+          },
+          {
+            src: "media/image 7.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+            text: "Nụ cười của em làm anh tan chảy, thật sự là một khoảnh khắc đáng nhớ! 😊",
+          },
+          {
+            src: "media/image 8.jpeg",
+            fallback:
+              "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+            text: "Bức ảnh anh yêu thích nhất 🌟",
+          },
+        ];
+
+        const S = [
+          {
+            say: "Hôm nay là một ngày vô cùng đặc biệt — 20/10 ngập tràn yêu thương!",
+            scene: "intro",
+            bg: 0,
+            mode: "hero",
+          },
+          {
+            say: "Gửi đến cô gái đáng yêu, xinh đẹp và tuyệt vời nhất của anh...",
+            scene: "girlfriend",
+            bg: 1,
+            mode: "hero",
+          },
+          {
+            say: "Cảm ơn em vì đã luôn ở bên cạnh anh qua mọi thăng trầm và khó khăn thử thách!",
+            scene: "girlfriend",
+            bg: 2,
+            mode: "hero",
+          },
+          {
+            say: galleryItems[0].text,
+            scene: "gallery",
+            bg: 3,
+            mode: "side",
+            wait: true,
+          },
+          {
+            say: "Còn bây giờ thì đoán xem anh gửi em gửi những món quà ngọt ngào nào nhé?",
+            scene: "health",
+            bg: 1,
+            mode: "side",
+          },
+          {
+            say: "Món quà đầu tiên: thật nhiều <em>sức khỏe</em> để luôn tràn đầy năng lượng!",
+            scene: "health",
+            bg: 2,
+            mode: "side",
+          },
+          {
+            say: "Món quà thứ hai: luôn được <em>yêu thương</em> trọn vẹn nhất.",
+            scene: "love",
+            bg: 3,
+            mode: "side",
+          },
+          {
+            say: "Trước khi nhận quà chót, cho anh hỏi nhỏ... em có feedback về website này hong?",
+            scene: "question",
+            bg: 0,
+            mode: "hero",
+            wait: true,
+          },
+          {
+            say: "Lời cuối nè! Chúc vk luôn rạng rỡ và hạnh phúc mỗi ngày bên góc tiệm bình yên này nhé! 💖",
+            scene: "final",
+            bg: 4,
+            mode: "side",
+            wait: true,
+            final: true,
+          },
+        ];
+
+        let idx = -1,
+          started = false,
+          curScene = null,
+          waiting = false,
+          timer = null;
+        let currAngle = 0;
+        let galleryIndex = 0;
+        const carousel = $("#spinGallery");
+        const catNode = $("#nu");
+        const bgm = $("#bgm");
+
+        // Generate Falling Roses Rain effect
+        function initRoseRain() {
+          const container = $("#rose-rain");
+          if (!container) return;
+          container.innerHTML = "";
+          const emojis = ["🌹", "🌸", "❤️", "🌷", "✨"];
+          for (let i = 0; i < 22; i++) {
+            const span = document.createElement("span");
+            span.className = "falling-rose";
+            span.textContent =
+              emojis[Math.floor(Math.random() * emojis.length)];
+            span.style.left = Math.random() * 100 + "%";
+            span.style.animationDuration = 3.5 + Math.random() * 4 + "s";
+            span.style.animationDelay = Math.random() * 5 + "s";
+            span.style.fontSize = 16 + Math.random() * 18 + "px";
+            container.appendChild(span);
+          }
+        }
+
+        function setupDynamicCarousel() {
+          if (!carousel) return;
+          carousel.innerHTML = "";
+          const N = galleryItems.length;
+          const container = $(".gallery-container");
+          const itemWidth = container ? container.offsetWidth : 300;
+          const depthOffset = 160;
+          const r =
+            Math.round(itemWidth / 2 / Math.tan(Math.PI / N)) + depthOffset;
+
+          galleryItems.forEach((imgObj, i) => {
+            const item = document.createElement("div");
+            item.className = "gallery-item";
+            const angle = i * (360 / N);
+            item.style.transform = `rotateY(${angle}deg) translateZ(${r}px)`;
+
+            const img = document.createElement("img");
+            img.src = imgObj.src;
+            img.alt = `Gallery Photo ${i + 1}`;
+            img.onerror = function () {
+              this.onerror = null;
+              this.src =
+                imgObj.fallback ||
+                `https://placehold.co/800x600/18100d/dda15e?text=Photo+${i + 1}`;
+            };
+
+            item.appendChild(img);
+            carousel.appendChild(item);
+          });
+        }
+
+        let audioCtx = null;
+        function playCuteSound(type = "pop") {
+          try {
+            if (!audioCtx) {
+              const AudioContext =
+                window.AudioContext || window.webkitAudioContext;
+              audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === "suspended") {
+              audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+            if (type === "pop") {
+              osc.type = "sine";
+              osc.frequency.setValueAtTime(420, now);
+              osc.frequency.exponentialRampToValueAtTime(880, now + 0.09);
+              gain.gain.setValueAtTime(0.2, now);
+              gain.gain.linearRampToValueAtTime(0.01, now + 0.09);
+              osc.start(now);
+              osc.stop(now + 0.09);
+            } else if (type === "meow") {
+              osc.type = "triangle";
+              osc.frequency.setValueAtTime(580, now);
+              osc.frequency.exponentialRampToValueAtTime(420, now + 0.15);
+              osc.frequency.exponentialRampToValueAtTime(740, now + 0.32);
+              gain.gain.setValueAtTime(0.22, now);
+              gain.gain.linearRampToValueAtTime(0.01, now + 0.32);
+              osc.start(now);
+              osc.stop(now + 0.32);
+            }
+          } catch (e) {}
+        }
+
+        function animateCatSpin(direction) {
+          if (!catNode) return;
+          const className =
+            direction === "left" ? "spinning-left" : "spinning-right";
+          catNode.classList.remove("spinning-left", "spinning-right");
+          void catNode.offsetWidth;
+          catNode.classList.add(className);
+          playCuteSound("meow");
+          setTimeout(() => {
+            catNode.classList.remove("spinning-left", "spinning-right");
+          }, 550);
+        }
+
+        function updateGallery(dir) {
+          const N = galleryItems.length;
+          const angleStep = 360 / N;
+          if (dir === "left") {
+            currAngle += angleStep;
+            galleryIndex = (galleryIndex - 1 + N) % N;
+            animateCatSpin("left");
+          } else {
+            currAngle -= angleStep;
+            galleryIndex = (galleryIndex + 1) % N;
+            animateCatSpin("right");
+          }
+          if (carousel) carousel.style.transform = `rotateY(${currAngle}deg)`;
+          say(galleryItems[galleryIndex].text);
+        }
+
+        $("#prevGallery")?.addEventListener("click", () =>
+          updateGallery("left"),
+        );
+        $("#nextGallery")?.addEventListener("click", () =>
+          updateGallery("right"),
+        );
+
+        window.addEventListener("resize", setupDynamicCarousel);
+
+        $("#continueStory")?.addEventListener("click", () => {
+          playCuteSound("pop");
+          if (waiting) {
+            waiting = false;
+            go(idx + 1);
+          }
+        });
+
+        $("#btnSkip")?.addEventListener("click", () => {
+          playCuteSound("pop");
+          waiting = false;
+          go(idx + 1);
+        });
+
+        $("#ansYes")?.addEventListener("click", () => {
+          playCuteSound("pop");
+          if (waiting) {
+            waiting = false;
+            say(
+              "Tuyệt vời lắm! Anh vui khi em thích món quà này. Chúc em luôn hạnh phúc và rạng rỡ nhé! Hẹn em tối nay nhé 💖",
+            );
+            document.body.classList.remove("m-hero");
+            document.body.classList.add("m-side");
+            clearTimeout(timer);
+            timer = setTimeout(() => go(idx + 1), 2800);
+          }
+        });
+
+        $("#ansNo")?.addEventListener("click", () => {
+          playCuteSound("pop");
+          if (waiting) {
+            waiting = false;
+            say("Thế để tối nay anh sẽ bù đắp cho em nhé 💖");
+            document.body.classList.remove("m-hero");
+            document.body.classList.add("m-side");
+            clearTimeout(timer);
+            timer = setTimeout(() => go(idx + 1), 2800);
+          }
+        });
+
+        $("#mute")?.addEventListener("click", () => {
+          if (!bgm) return;
+          bgm.muted = !bgm.muted;
+          $("#mute")?.classList.toggle("muted", bgm.muted);
+        });
+
+        function say(html) {
+          $("#bubble")?.classList.toggle("empty", !html);
+          const line = $("#line");
+          if (line) line.innerHTML = html || "";
+        }
+
+        function showScene(name) {
+          const sceneId = "sc-" + name;
+          const next = $("#" + sceneId);
+          if (curScene && curScene !== next) curScene.classList.remove("on");
+          curScene = next;
+          if (next) next.classList.add("on");
+
+          if (name === "final") {
+            document.body.classList.add("final-scene-active");
+            initRoseRain();
+          } else {
+            document.body.classList.remove("final-scene-active");
+          }
+        }
+
+        function go(n) {
+          clearTimeout(timer);
+          if (n >= S.length) return;
+          idx = n;
+          const st = S[n];
+          $$(".bgl").forEach((e, k) => e.classList.toggle("on", k === st.bg));
+
+          if (st.mode) {
+            document.body.classList.toggle("m-hero", st.mode === "hero");
+            document.body.classList.toggle("m-side", st.mode === "side");
+          }
+
+          showScene(st.scene);
+          say(st.say);
+          const prog = $("#prog");
+          if (prog) prog.style.width = ((n + 1) / S.length) * 100 + "%";
+
+          waiting = !!st.wait;
+          if (!st.wait) {
+            timer = setTimeout(() => go(n + 1), 4200);
+          }
+        }
+
+        document.addEventListener("click", (e) => {
+          if (!started || waiting) return;
+          if (e.target.closest("button")) return;
+          playCuteSound("pop");
+          go(idx + 1);
+        });
+
+        $("#b-replay")?.addEventListener("click", () => {
+          playCuteSound("pop");
+          galleryIndex = 0;
+          currAngle = 0;
+          if (carousel) carousel.style.transform = `rotateY(0deg)`;
+          go(0);
+        });
+
+        $("#start")?.addEventListener("click", () => {
+          if (started) return;
+          started = true;
+          setupDynamicCarousel();
+          $("#start")?.classList.add("gone");
+          if (bgm) {
+            bgm.volume = 0.6;
+            bgm.play().catch(() => {});
+          }
+          playCuteSound("pop");
+          go(0);
+        });
+      });
+    </script>
+  </body>
+</html>
