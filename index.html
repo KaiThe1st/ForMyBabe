@@ -40,6 +40,8 @@
       button {
         font: inherit;
         color: inherit;
+        cursor: pointer;
+        touch-action: manipulation;
       }
 
       .bg-container {
@@ -328,6 +330,11 @@
         touch-action: pan-y;
       }
 
+      /* Nhánh PC: 3D Spin Carousel[cite: 8] */
+      .pc-gallery-branch {
+        display: block;
+        width: 100%;
+      }
       .gallery-container {
         perspective: 1400px;
         -webkit-perspective: 1400px;
@@ -377,6 +384,60 @@
         background: #18100d;
         display: block;
         pointer-events: none;
+      }
+
+      /* Nhánh Mobile: Swipe Carousel[cite: 9] */
+      .mobile-gallery-branch {
+        display: none;
+        width: 100%;
+      }
+      .mobile-gallery-container {
+        width: 100%;
+        height: min(52vw, 190px);
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        border: 2px solid var(--coffee-gold);
+        background: #18100d;
+        box-shadow:
+          0 10px 25px rgba(0, 0, 0, 0.6),
+          0 0 10px rgba(221, 161, 94, 0.2);
+      }
+
+      .swipe-carousel {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        will-change: transform;
+      }
+
+      .mobile-gallery-item {
+        min-width: 100%;
+        height: 100%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #18100d;
+      }
+
+      .mobile-gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        pointer-events: none;
+      }
+
+      @media (max-width: 768px) {
+        .pc-gallery-branch {
+          display: none !important;
+        }
+        .mobile-gallery-branch {
+          display: block !important;
+        }
       }
 
       .gallery-nav {
@@ -728,13 +789,24 @@
 
       <section class="scene" id="sc-gallery">
         <div class="gallery-wrapper">
-          <div class="gallery-container" id="gallerySwipeArea">
-            <div class="spin-carousel" id="spinGallery"></div>
+          <!-- Nhánh PC: 3D Spin Carousel[cite: 8] -->
+          <div class="pc-gallery-branch">
+            <div class="gallery-container">
+              <div class="spin-carousel" id="spinGallery"></div>
+            </div>
           </div>
+
+          <!-- Nhánh Mobile: Swipe Carousel[cite: 9] -->
+          <div class="mobile-gallery-branch" id="mobileSwipeArea">
+            <div class="mobile-gallery-container">
+              <div class="swipe-carousel" id="mobileSwipeGallery"></div>
+            </div>
+          </div>
+
           <div class="gallery-nav">
-            <button id="prevGallery">❮ Ảnh trước</button>
-            <button id="nextGallery">Ảnh sau ❯</button>
-            <button id="continueStory" class="primary-btn">
+            <button id="prevGallery" type="button">❮ Ảnh trước</button>
+            <button id="nextGallery" type="button">Ảnh sau ❯</button>
+            <button id="continueStory" class="primary-btn" type="button">
               Tiếp tục câu chuyện ➔
             </button>
           </div>
@@ -768,8 +840,8 @@
             website này hong?
           </div>
           <div class="qbtns">
-            <button id="ansYes">Rồi, rất ngọt ngào!</button>
-            <button id="ansNo">Chưa nè...</button>
+            <button id="ansYes" type="button">Rồi, rất ngọt ngào!</button>
+            <button id="ansNo" type="button">Chưa nè...</button>
           </div>
         </div>
       </section>
@@ -782,7 +854,7 @@
             này!
           </p>
           <div class="f-act">
-            <button id="b-replay">Xem lại từ đầu</button>
+            <button id="b-replay" type="button">Xem lại từ đầu</button>
           </div>
         </div>
       </section>
@@ -1109,6 +1181,7 @@
         let currAngle = 0;
         let galleryIndex = 0;
         const carousel = $("#spinGallery");
+        const mobileCarousel = $("#mobileSwipeGallery");
         const catNode = $("#nu");
         const bgm = $("#bgm");
 
@@ -1159,6 +1232,35 @@
             item.appendChild(img);
             carousel.appendChild(item);
           });
+        }
+
+        function setupMobileSwipeGallery() {
+          if (!mobileCarousel) return;
+          mobileCarousel.innerHTML = "";
+          galleryItems.forEach((imgObj, i) => {
+            const item = document.createElement("div");
+            item.className = "mobile-gallery-item";
+
+            const img = document.createElement("img");
+            img.src = imgObj.src;
+            img.alt = `Gallery Photo ${i + 1}`;
+            img.onerror = function () {
+              this.onerror = null;
+              this.src =
+                imgObj.fallback ||
+                `https://placehold.co/800x600/18100d/dda15e?text=Photo+${i + 1}`;
+            };
+
+            item.appendChild(img);
+            mobileCarousel.appendChild(item);
+          });
+          updateMobileSwipePosition();
+        }
+
+        function updateMobileSwipePosition() {
+          if (!mobileCarousel) return;
+          mobileCarousel.style.transform = `translateX(-${galleryIndex * 100}%)`;
+          say(galleryItems[galleryIndex].text);
         }
 
         let audioCtx = null;
@@ -1212,23 +1314,30 @@
           }, 550);
         }
 
-        function updateGallery(dir) {
+        function navigateGallery(dir) {
           const N = galleryItems.length;
-          const angleStep = 360 / N;
+          const isMobile = window.innerWidth <= 768;
+
           if (dir === "left") {
-            currAngle += angleStep;
             galleryIndex = (galleryIndex - 1 + N) % N;
             animateCatSpin("left");
           } else {
-            currAngle -= angleStep;
             galleryIndex = (galleryIndex + 1) % N;
             animateCatSpin("right");
           }
-          if (carousel) carousel.style.transform = `rotateY(${currAngle}deg)`;
-          say(galleryItems[galleryIndex].text);
+
+          if (isMobile) {
+            updateMobileSwipePosition();
+          } else {
+            const angleStep = 360 / N;
+            currAngle += dir === "left" ? angleStep : -angleStep;
+            if (carousel) carousel.style.transform = `rotateY(${currAngle}deg)`;
+            say(galleryItems[galleryIndex].text);
+          }
         }
 
-        const swipeArea = $("#gallerySwipeArea");
+        // Xử lý vuốt cảm ứng trên Mobile
+        const swipeArea = $("#mobileSwipeArea");
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -1244,30 +1353,33 @@
           "touchend",
           (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipeGesture();
+            const threshold = 35;
+            if (touchEndX < touchStartX - threshold) {
+              navigateGallery("right");
+            } else if (touchEndX > touchStartX + threshold) {
+              navigateGallery("left");
+            }
           },
           { passive: true },
         );
 
-        function handleSwipeGesture() {
-          const threshold = 40;
-          if (touchEndX < touchStartX - threshold) {
-            updateGallery("right");
-          } else if (touchEndX > touchStartX + threshold) {
-            updateGallery("left");
-          }
-        }
+        // Ngăn chặn sự kiện click nổi bọt kích hoạt chuyển cảnh màn hình chính
+        $("#prevGallery")?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          navigateGallery("left");
+        });
 
-        $("#prevGallery")?.addEventListener("click", () =>
-          updateGallery("left"),
-        );
-        $("#nextGallery")?.addEventListener("click", () =>
-          updateGallery("right"),
-        );
+        $("#nextGallery")?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          navigateGallery("right");
+        });
 
-        window.addEventListener("resize", setupDynamicCarousel);
+        window.addEventListener("resize", () => {
+          setupDynamicCarousel();
+        });
 
-        $("#continueStory")?.addEventListener("click", () => {
+        $("#continueStory")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           playCuteSound("pop");
           if (waiting) {
             waiting = false;
@@ -1275,13 +1387,15 @@
           }
         });
 
-        $("#btnSkip")?.addEventListener("click", () => {
+        $("#btnSkip")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           playCuteSound("pop");
           waiting = false;
-          go(idx + 1);
+          go(idx + ln); // hoặc go(idx + 1)
         });
 
-        $("#ansYes")?.addEventListener("click", () => {
+        $("#ansYes")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           playCuteSound("pop");
           if (waiting) {
             waiting = false;
@@ -1295,7 +1409,8 @@
           }
         });
 
-        $("#ansNo")?.addEventListener("click", () => {
+        $("#ansNo")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           playCuteSound("pop");
           if (waiting) {
             waiting = false;
@@ -1307,7 +1422,8 @@
           }
         });
 
-        $("#mute")?.addEventListener("click", () => {
+        $("#mute")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           if (!bgm) return;
           bgm.muted = !bgm.muted;
           $("#mute")?.classList.toggle("muted", bgm.muted);
@@ -1364,18 +1480,22 @@
           go(idx + 1);
         });
 
-        $("#b-replay")?.addEventListener("click", () => {
+        $("#b-replay")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           playCuteSound("pop");
           galleryIndex = 0;
           currAngle = 0;
           if (carousel) carousel.style.transform = `rotateY(0deg)`;
+          updateMobileSwipePosition();
           go(0);
         });
 
-        $("#start")?.addEventListener("click", () => {
+        $("#start")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           if (started) return;
           started = true;
           setupDynamicCarousel();
+          setupMobileSwipeGallery();
           $("#start")?.classList.add("gone");
           if (bgm) {
             bgm.volume = 0.6;
